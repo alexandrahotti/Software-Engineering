@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CompositeSuitcase extends Component{
 //CompositeSuitcase skapar componentobjekt
-static ArrayList<Component> components;
+ArrayList<Component> components;
 //StringBuilder output;
 int totalweight;
 
@@ -28,7 +28,7 @@ public void updatetotalweight(){
 }
 
 public int getWeight(){
-  System.out.println(this.getChild(0));
+  //System.out.println(this.getChild(0));
   return this.itemWeight;
 }
 
@@ -39,14 +39,16 @@ public String testString(){
     output += " " + comp;
     return output;
    }
-
+// så om man ber om väskans första next skaman inte få väskan
 public String toString(){
-    String output = "";
+  System.out.println("toString: "+this.itemName);
+    String output = this.itemName;
   //  output = new StringBuilder(this.itemName+"\n");
 //    System.out.println(this.components.itemName);
     for(int i=0; i<this.components.size(); i++){
   //      output.append(this.getChild(i));
         Component comp = this.components.get(i);
+        System.out.println("forLoop varv: "+i+" "+comp.itemName);
         output += " " + comp;
     }
     return output;
@@ -62,28 +64,35 @@ public Component getChild(int i){
 }
 
 public static void main(String args[]){
-    CompositeSuitcase väska = new CompositeSuitcase(5,"douchebag");
-
-    CompositeSuitcase necessär = new CompositeSuitcase(2,"necessär");
+  int i=0;
+  System.out.println(++i);
+    CompositeSuitcase vaska = new CompositeSuitcase(5,"douchebag");
+System.out.println(++i);
+    CompositeSuitcase necessar = new CompositeSuitcase(2,"necessar");
+    System.out.println(++i);
     Component tandborste = new Leaf(1,"tandborste");
     Component deo = new Leaf(1,"deo");
     Component puder = new Leaf(1,"puder");
+System.out.println(++i);
+    necessar.add(tandborste);
+    System.out.println(++i);
+    necessar.add(deo);
+System.out.println(++i);
+    necessar.add(puder);
 
-    necessär.add(tandborste);
-    necessär.add(deo);
-    necessär.add(puder);
+    vaska.add(necessar);
 
-    väska.add(necessär);
-
-    Component tröja = new Leaf(2,"tröja");
+    Component troja = new Leaf(2,"troja");
     Component byxa = new Leaf(2,"byxor");
 
-    väska.add(tröja);
-    väska.add(byxa);
-
-    necessär.getWeight();
-  //  System.out.println(necessär.toString());
-    System.out.println(necessär);
+    vaska.add(troja);
+    vaska.add(byxa);
+System.out.println(++i);
+    necessar.getWeight();
+    System.out.println(++i);
+  //  System.out.println(necessar.toString());
+    System.out.println(necessar);
+    System.out.println(vaska);
 }
 
 }
