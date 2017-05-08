@@ -93,6 +93,8 @@ System.out.println(++i);
   //  System.out.println(necessar.toString());
     System.out.println(necessar);
     System.out.println(vaska);
+    // test skillnad
+
 }
 
 }
