@@ -1,46 +1,49 @@
-
-
 import java.util.Stack;
 import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class DfsIterator implements Iterator<Component>{
 
-    Stack<Iterator<Component>> stack = new Stack<Iterator<Component>>();
+    Stack<Component> stack = new Stack<Component>();
+    ArrayList<Component> components;
 
-    public DfsIterator(){
-        Iterator<Component> iterator = new Iterator<Component>();
-        stack.push(iterator);
+    public DfsIterator(ArrayList components){
+        this.components = components;
+        CompositeSuitcase root =  (CompositeSuitcase)components.get(0);
+        stack.push(root);
+        //Iterator<Component> iterator = new Iterator<Component>();
+        //stack.push(iterator);
     }
 
     public boolean hasNext(){
-        if(stack.empty()){
-            return false;
-        }
-        else{
-            Iterator<Component> iterator = stack.peek();
-            if (!iterator.hasNext()) {
-                stack.pop();
-                return hasNext();
-            }
-            else{
-                return true;
-            }
-        }
+      System.out.println("vi kom in i vår egna hasnext");
+      if (stack.peek()!=null){
+          return true;
+      }
+      else{
+          return false;
+      }
     }
 
+    // Get and return next component item
     public Component next(){
-        if(hasNext()){
-            Iterator<Component> Iterator = stack.peek();
-            Component component = iterator.peek();
-            stack.push(component.createIterator());
-            return component;
-        }
-        else{
-            return null;
-        }
+
+        System.out.println("den kmr in i next!!!!!!!!!!!!!!!!!");
+        Component compParent = stack.pop();
+        System.out.println(compParent.itemName+"här");
+        // if(compParent.iterable){
+        //   //Composite cmp =stack.pop();
+        //   for(Component compKid: compParent.components){
+        //     stack.push(compKid);
+        //     //vi pushar alla
+        //   } }
+          return compParent;
+
+
     }
 
+    // Implementation unnecessary
     public void remove(){
     }
 }

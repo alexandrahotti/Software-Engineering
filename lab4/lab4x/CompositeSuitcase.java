@@ -1,84 +1,134 @@
+//
+//   Authors:
+//   Alexandra Hotti & Helena Rosenzweig
+//
+
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Iterator;
 
-public class CompositeSuitcase extends Component implements Iterable<Component>{ // allows the object CompositeSuitcase to be the target of the "foreach" statement
-//CompositeSuitcase skapar componentobjekt
-static List<Component> väskinnehåll;
-int weight;
+// Composite class for container objects
+public class CompositeSuitcase extends Component implements Iterable<Component>{
+
+ArrayList<Component> components;
 int totalweight;
-String pryltyp;
-int viktcomp;
-//vi ska här skapa en lista av Components
-    CompositeSuitcase(int weight, String pryltyp){
-      super();
-      this.weight=weight;
-      this.pryltyp=pryltyp;
-      väskinnehåll = new ArrayList<Component>();
-      }
-public void add(Component objekt){
-    väskinnehåll.add(objekt);
+
+// Creates object according to Component constructor
+// conponents ArrayList keeps track of what is in the current container
+CompositeSuitcase(int weight, String name){
+      super(weight, name);
+      components = new ArrayList<Component>();
+      this.iterable = true;
+
+}
+
+// Adds new items to the container
+public void add(Component component){
+    components.add(component);
     updatetotalweight();
 }
+
+// Updates the total weight of the container
+// i.e. sums the weight of the container and its items
 public void updatetotalweight(){
-  totalweight=0;
-  for (Component comp: väskinnehåll){
-    viktcomp=comp.getWeight();
-    totalweight=totalweight+viktcomp;
-  }
-  totalweight=totalweight+this.weight;
+    totalweight=0;
+    for (Component comp: components){
+        totalweight+=comp.getWeight();
+    }
+    totalweight+=this.itemWeight;
 }
+
+// Returns the total weight of the container
 public int getWeight(){
-  return this.weight;
+    return this.itemWeight;
 }
+
+// Returns a string of the name of the container and
+// all of its items
 public String toString(){
-    return pryltyp;
-  }
-public void remove(int i){
-  väskinnehåll.remove(i);
+    //System.out.println("toString: "+this.itemName);
+    String output = this.itemName;
+    for(int i=0; i<this.components.size(); i++){
+        Component comp = this.components.get(i);
+        //System.out.println("forLoop varv: "+i+" "+comp.itemName);
+        output += " " + comp;
+    }
+    return output;
+}
+// Removes container object, updates total weight
+public void remove(Component comp){
+  int index = components.indexOf(comp);
+  components.remove(index);
   updatetotalweight();
 }
 
+// Returns a component for a given index
 public Component getChild(int i){
-  return väskinnehåll.get(i);
+  return components.get(i);
 }
 
-// PÅBÖRJAD ITERATORMETODER
+//if (comp instanceof Composite) {
 
-public Iterator<Component> iterator(String iterator){
-
-      if (iterator == BfsIterator){
-          iterator = new BfsIterator();
-      }
-      else if(iterator == DfsIterator){
-          iterator = new DfsIterator();
-      }
-      else{
-          System.out.println("Invalid iterator.");
-      }
-      return iterator;
+public Iterator<Component> iterator(){
+      return (Iterator<Component>) new DfsIterator(components);
 }
-
-
+// Main method where we create and add several
+// containers and items.
 public static void main(String args[]){
-    CompositeSuitcase väska = new CompositeSuitcase(5,"douchebag");
-
+    int i=0;
+    //System.out.println(++i);
+    CompositeSuitcase vaska = new CompositeSuitcase(5,"douchebag");
+    //System.out.println(++i);
+    CompositeSuitcase necessar = new CompositeSuitcase(2,"necessar");
+    //System.out.println(++i);
     Leaf tandborste = new Leaf(1,"tandborste");
-    CompositeSuitcase necessär = new CompositeSuitcase(2,"necessär");
-    Leaf hårnål =new Leaf(1, "hårnål");
-    CompositeSuitcase burk =new CompositeSuitcase(1,"burk");
+    Leaf deo = new Leaf(1,"deo");
+    Leaf puder = new Leaf(1,"puder");
+    //System.out.println(++i);
+    necessar.add(tandborste);
+    //System.out.println(++i);
+    necessar.add(deo);
+    //System.out.println(++i);
+    necessar.add(puder);
 
-    burk.add(hårnål);
-    necessär.add(tandborste);
-    necessär.add(burk);
-    väska.add(necessär);
-//    for (Component comp: väska){
-      System.out.println(burk);
-  //  }
-    System.out.println(väska.totalweight);
+    vaska.add(necessar);
+
+    Leaf troja = new Leaf(2,"troja");
+    Leaf byxa = new Leaf(2,"byxor");
+
+    vaska.add(troja);
+    vaska.add(byxa);
+    System.out.println(++i);
+    necessar.getWeight();
+    System.out.println(++i);
+
+    System.out.println(necessar);
+    System.out.println(vaska);
+
+//  DFS ITERATOR:
+
+    Iterator<Component> iteratorn = vaska.components.iterator();
+    System.out.println("iterator skapas");
+    int j = 0;
+    System.out.println("iteratorn.hasNext() = "+iteratorn.hasNext());
+    while(iteratorn.hasNext()){
+      //System.out.println(iteratorn.next()+" next");
+      System.out.println("Varv: "+j);
+      Component comp = iteratorn.next();
+      System.out.println(comp.itemName);
+      j++;
+    }
 
 
+    // while(hasNext()){
+    //     Iterator<Component> Iterator = stack.peek();
+    //     Component component = iterator.peek();
+    //     stack.push(component.createIterator());
+    //     return component;
+    //
+    // }
 
-}
 
+    //här används .iterator på objekten som ska itereras över
+  }
 }

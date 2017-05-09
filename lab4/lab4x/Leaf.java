@@ -1,22 +1,19 @@
 
 public class Leaf extends Component{
-int weight;
-String pryltyp;
 
-
-    Leaf(int weight, String pryltyp){
-      super();
-      this.weight=weight;
-      this.pryltyp=pryltyp;
+Leaf(int weight, String item){
+      super(weight, item);  //super ger Leaf
+      this.iterable = false;
+      compType="Leaf";
+    //  compType="Leaf";
 }
 
-  public int getWeight(){
-    return this.weight;
-
+public int getWeight(){
+    return this.itemWeight;
 }
 
-  public String toString(){
-      return this.pryltyp;
+public String toString(){
+      return this.itemName;
 
     }
 }
