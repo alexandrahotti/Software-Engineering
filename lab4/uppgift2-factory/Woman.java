@@ -8,7 +8,7 @@ String sex;
 Woman(String name, String pnr){
   this.name = name;
   this.pnr = pnr;
-  this.sex = "icke-binär";
+  this.sex = "kvinna";
 }
 
 public String toString(){

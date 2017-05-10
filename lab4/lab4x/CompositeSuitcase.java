@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
-// Composite class for container objects
+// CompositeSuitcase class for container objects
 public class CompositeSuitcase extends Component implements Iterable<Component>{
 
 ArrayList<Component> components;
@@ -71,6 +71,7 @@ public Component getChild(int i){
 //if (comp instanceof Composite) {
 
 public Iterator<Component> iterator(){
+      //return new BfsIterator(this);
       return new DfsIterator(this);
 }
 
@@ -78,31 +79,30 @@ public Iterator<Component> iterator(){
 // Main method where we create and add several
 // containers and items.
 public static void main(String args[]){
+  CompositeSuitcase vaska = new CompositeSuitcase(5,"vaska");
+  CompositeSuitcase necessar = new CompositeSuitcase(2,"necessar");
+  CompositeSuitcase planbok = new CompositeSuitcase(1, "planbok");
 
-    //System.out.println(++i);
-    CompositeSuitcase vaska = new CompositeSuitcase(5,"douchebag");
-    //System.out.println(++i);
-    CompositeSuitcase necessar = new CompositeSuitcase(2,"necessar");
-    //System.out.println(++i);
-    Leaf tandborste = new Leaf(1,"tandborste");
-    Leaf deo = new Leaf(1,"deo");
-    Leaf puder = new Leaf(1,"puder");
-    //System.out.println(++i);
-    necessar.add(tandborste);
-    //System.out.println(++i);
-    necessar.add(deo);
-    //System.out.println(++i);
-    necessar.add(puder);
+  Leaf tandborste = new Leaf(1,"tandborste");
+  Leaf deo = new Leaf(1,"deo");
+  Leaf puder = new Leaf(1,"puder");
+  Leaf troja = new Leaf(2,"troja");
+  Leaf byxa = new Leaf(2,"byxor");
+  Leaf skor = new Leaf(3,"skor");
+  Leaf kreditkort = new Leaf(1, "kreditkort");
 
-    vaska.add(necessar);
 
-    Leaf troja = new Leaf(2,"troja");
-    Leaf byxa = new Leaf(2,"byxor");
+  necessar.add(tandborste);
+  necessar.add(deo);
+  necessar.add(puder);
+  planbok.add(kreditkort);
+  vaska.add(necessar);
+  vaska.add(planbok);
 
-    vaska.add(troja);
-    vaska.add(byxa);
+  vaska.add(skor);
+  vaska.add(troja);
+  vaska.add(byxa);
 
-    necessar.getWeight();
 
 
 //  DFS ITERATOR:

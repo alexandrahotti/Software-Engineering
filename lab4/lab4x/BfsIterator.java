@@ -1,24 +1,40 @@
 
-public class BfsIterator<Component> implements Iterator{
+import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.*;
+
+
+public class BfsIterator implements Iterator{
     private Queue<Component> linkedlist = new LinkedList<>();
     ArrayList<Component> components;
 
-    BfsIterator(ArrayList<Component>  components){
-      this.components = components;
-      CompositeSuitcase root =  (CompositeSuitcase)components.get(0);
-      linkedlist.add(root);
-      root.visited=True;
+    BfsIterator(Component root){
+        linkedlist.add(root);
+    //    root.visited=True;
     }
-    boolean hasNext(){
+    public boolean hasNext(){
       return linkedlist.peek()!=null;
     }
 
-    Component next(){}
-      if(hasNext()){
-        Component comp = linkedlist.remove();
-      }
+    public Component next(){
+      Component compParentTemp = linkedlist.remove();
+//      System.out.println("Objektet som poppades från stacken är: "+compParentTemp.itemName);
+      if(compParentTemp.iterable){
+        CompositeSuitcase compParent = (CompositeSuitcase) compParentTemp;
+        //Composite cmp =stack.pop();
+        for(Component compKid: compParent.components){
+          linkedlist.add(compKid);
+          //vi pushar alla
+        }
+       }
+      return compParentTemp;
 
-    void remove(){}
+
+  }
+
+    public void remove(){}
 
 
 }

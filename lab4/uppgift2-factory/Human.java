@@ -3,9 +3,6 @@ import java.lang.*;
 abstract class Human{
 
   //    static String secondLast;
-Human(){
-}
-
 static Human create (String name, String pnr) {
 
        String secondLast = Character.toString(pnr.charAt(9));

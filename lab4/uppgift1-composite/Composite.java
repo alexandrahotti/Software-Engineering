@@ -14,7 +14,7 @@ int totalweight;
 
 // Creates object according to Component constructor
 // conponents ArrayList keeps track of what is in the current container
-CompositeSuitcase(int weight, String name){
+Composite(int weight, String name){
       super(weight, name);
       components = new ArrayList<Component>();
 }
@@ -37,17 +37,15 @@ public void updatetotalweight(){
 
 // Returns the total weight of the container
 public int getWeight(){
-    return this.itemWeight;
+    return totalweight;
 }
 
 // Returns a string of the name of the container and
 // all of its items
 public String toString(){
-    System.out.println("toString: "+this.itemName);
     String output = this.itemName;
     for(int i=0; i<this.components.size(); i++){
         Component comp = this.components.get(i);
-        System.out.println("forLoop varv: "+i+" "+comp.itemName);
         output += " " + comp;
     }
     return output;
@@ -66,34 +64,34 @@ public Component getChild(int i){
 // Main method where we create and add several
 // containers and items.
 public static void main(String args[]){
-    int i=0;
-    System.out.println(++i);
     Composite vaska = new Composite(5,"douchebag");
-    System.out.println(++i);
     Composite necessar = new Composite(2,"necessar");
-    System.out.println(++i);
+    Composite planbok = new Composite(1, "planbok");
+
     Leaf tandborste = new Leaf(1,"tandborste");
     Leaf deo = new Leaf(1,"deo");
     Leaf puder = new Leaf(1,"puder");
-    System.out.println(++i);
-    necessar.add(tandborste);
-    System.out.println(++i);
-    necessar.add(deo);
-    System.out.println(++i);
-    necessar.add(puder);
-
-    vaska.add(necessar);
-
     Leaf troja = new Leaf(2,"troja");
     Leaf byxa = new Leaf(2,"byxor");
+    Leaf skor = new Leaf(3,"skor");
+    Leaf kreditkort = new Leaf(1, "kreditkort");
 
+
+    necessar.add(tandborste);
+    necessar.add(deo);
+    necessar.add(puder);
+    planbok.add(kreditkort);
+    vaska.add(necessar);
+    vaska.add(planbok);
+
+    vaska.add(skor);
     vaska.add(troja);
     vaska.add(byxa);
-    System.out.println(++i);
-    necessar.getWeight();
-    System.out.println(++i);
 
-    System.out.println(necessar);
+  //  System.out.println(necessar);
     System.out.println(vaska);
+    System.out.println("necessären och dess innehåll väger " +necessar.getWeight()+" kg");
+    System.out.println("plånboken och dess innehåll väger "+planbok.getWeight()+" kg");
+    System.out.println("pudret väger "+puder.getWeight()+" kg");
   }
 }
