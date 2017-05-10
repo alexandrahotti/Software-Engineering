@@ -19,6 +19,7 @@ CompositeSuitcase(int weight, String name){
       super(weight, name);
       components = new ArrayList<Component>();
       this.iterable = true;
+      this.visited=false;
 
 }
 
@@ -70,12 +71,14 @@ public Component getChild(int i){
 //if (comp instanceof Composite) {
 
 public Iterator<Component> iterator(){
-      return (Iterator<Component>) new DfsIterator(components);
+      return new DfsIterator(components);
 }
+
+
 // Main method where we create and add several
 // containers and items.
 public static void main(String args[]){
-    int i=0;
+
     //System.out.println(++i);
     CompositeSuitcase vaska = new CompositeSuitcase(5,"douchebag");
     //System.out.println(++i);
@@ -98,24 +101,31 @@ public static void main(String args[]){
 
     vaska.add(troja);
     vaska.add(byxa);
-    System.out.println(++i);
-    necessar.getWeight();
-    System.out.println(++i);
 
-    System.out.println(necessar);
-    System.out.println(vaska);
+    necessar.getWeight();
+
 
 //  DFS ITERATOR:
 
-    Iterator<Component> iteratorn = vaska.components.iterator();
-    System.out.println("iterator skapas");
+    Iterator<Component> iteratorn = vaska.iterator();
+
     int j = 0;
-    System.out.println("iteratorn.hasNext() = "+iteratorn.hasNext());
+
+
+    // if (iteratorn instanceof Iterator) {
+    //   System.out.println("vanlig iterator!");
+    // }
+    // if(iteratorn instanceof DfsIterator){
+    //   System.out.println("dfs iterator!");
+    // }
+
+
+
     while(iteratorn.hasNext()){
       //System.out.println(iteratorn.next()+" next");
-      System.out.println("Varv: "+j);
-      Component comp = iteratorn.next();
-      System.out.println(comp.itemName);
+
+      //Component comp = iteratorn.next();
+      System.out.println(iteratorn.next());
       j++;
     }
 

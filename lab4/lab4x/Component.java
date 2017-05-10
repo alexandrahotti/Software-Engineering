@@ -5,6 +5,7 @@ protected String itemName;
 protected int itemWeight;
 protected String compType;
 boolean iterable;
+boolean visited;
 
 public Component(int weight, String name){
       this.itemName = name;
