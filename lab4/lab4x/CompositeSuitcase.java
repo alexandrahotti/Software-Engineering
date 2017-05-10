@@ -71,7 +71,7 @@ public Component getChild(int i){
 //if (comp instanceof Composite) {
 
 public Iterator<Component> iterator(){
-      return new DfsIterator(components);
+      return new DfsIterator(this);
 }
 
 
@@ -109,7 +109,7 @@ public static void main(String args[]){
 
     Iterator<Component> iteratorn = vaska.iterator();
 
-    int j = 0;
+
 
 
     // if (iteratorn instanceof Iterator) {
@@ -123,10 +123,9 @@ public static void main(String args[]){
 
     while(iteratorn.hasNext()){
       //System.out.println(iteratorn.next()+" next");
-
       //Component comp = iteratorn.next();
-      System.out.println(iteratorn.next());
-      j++;
+      System.out.println(iteratorn.next().itemName);
+
     }
 
 
