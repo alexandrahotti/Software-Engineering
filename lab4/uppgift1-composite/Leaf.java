@@ -1,4 +1,4 @@
-
+//Helena Rosenzweig & Alexandra Hotti
 public class Leaf extends Component{
 
 

@@ -1,3 +1,5 @@
+//Helena Rosenzweig & Alexandra Hotti
+
 public class CompositeTester{
 
 public static void main(String args[]){

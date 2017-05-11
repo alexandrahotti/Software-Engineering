@@ -1,3 +1,5 @@
+//Helena Rosenzweig & Alexandra Hotti
+
 package human;
 
 class Woman extends Human{

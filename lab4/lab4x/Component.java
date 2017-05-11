@@ -1,4 +1,4 @@
-
+//Helena Rosenzweig & Alexandra Hotti
 public abstract class Component {
 
 protected String itemName;
