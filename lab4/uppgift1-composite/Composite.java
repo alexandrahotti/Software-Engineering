@@ -80,7 +80,9 @@ public static void main(String args[]){
     necessar.add(tandborste);
     necessar.add(deo);
     necessar.add(puder);
+
     planbok.add(kreditkort);
+
     vaska.add(necessar);
     vaska.add(planbok);
 

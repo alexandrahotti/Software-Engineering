@@ -43,7 +43,6 @@ public class DfsIterator  implements Iterator<Component>{
          }
         return compParentTemp;
 
-
     }
 
     // Implementation unnecessary

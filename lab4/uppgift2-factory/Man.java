@@ -1,10 +1,11 @@
+package human;
 
 class Man extends Human{
   String name;
   String pnr;
   String sex;
 
-  Man(String name, String pnr){
+protected Man(String name, String pnr){
     this.name = name;
     this.pnr = pnr;
     this.sex = "man";

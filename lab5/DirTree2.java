@@ -20,9 +20,14 @@ class DirTree2 extends TreeFrame {
     private void buildTree() {
 	File f=new File(directory);
 	String[] list = f.list();
+  System.out.println("list.length är: "+list.length);
 	for (int i=0; i<list.length; i++ )
-	    buildTree(new File(f,list[ i ]), root);
+	    buildTree(new File(f,list[i]), root);
+    //  System.out.println("listans element: ");
+    //  System.out.println(list[i]);
+    //  System.out.println("f är: "+f);
     }
+
 
     // New method
     private void buildTree( File f, DefaultMutableTreeNode parent) {

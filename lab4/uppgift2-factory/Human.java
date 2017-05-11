@@ -1,9 +1,12 @@
+package human;
 import java.lang.*;
 
-abstract class Human{
-
+public abstract class Human{
   //    static String secondLast;
-static Human create (String name, String pnr) {
+Human(){
+};
+
+public static Human create (String name, String pnr) {
 
        String secondLast = Character.toString(pnr.charAt(9));
        int secondLastNmbr = Integer.parseInt(secondLast);

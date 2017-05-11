@@ -1,3 +1,4 @@
+package human;
 
 class Woman extends Human{
 
@@ -5,10 +6,10 @@ String name;
 String pnr;
 String sex;
 
-Woman(String name, String pnr){
+protected Woman(String name, String pnr){
   this.name = name;
   this.pnr = pnr;
-  this.sex = "kvinna";
+  this.sex = "icke-binär";
 }
 
 public String toString(){

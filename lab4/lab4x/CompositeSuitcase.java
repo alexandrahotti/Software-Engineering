@@ -71,8 +71,8 @@ public Component getChild(int i){
 //if (comp instanceof Composite) {
 
 public Iterator<Component> iterator(){
-      //return new BfsIterator(this);
-      return new DfsIterator(this);
+      return new BfsIterator(this);
+    //  return new DfsIterator(this);
 }
 
 
