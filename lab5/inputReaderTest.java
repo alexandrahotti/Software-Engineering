@@ -18,7 +18,6 @@ static String line;
       }
 }
 
-
 public static void scan(){
   System.out.println(sc.hasNextLine());
   while(sc.hasNextLine()){

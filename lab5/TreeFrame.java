@@ -24,6 +24,7 @@ class TreeFrame extends JFrame implements ActionListener {
     	tree.addMouseListener(new MouseAdapter() {
     		public void mouseClicked(MouseEvent e) {
     		    if (box.isSelected())
+          //System.out.println(e.getSource() instanceof File);
     			showDetails(tree.getPathForLocation(e.getX(), e.getY()));
     		}
     	    });

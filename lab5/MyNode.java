@@ -12,4 +12,8 @@ public class MyNode extends DefaultMutableTreeNode{
         this.level = level;
         this.text = text;
     }
+public String getinfo(){
+    return super.toString() +": " + this.text;
+
+}
 }
