@@ -27,10 +27,12 @@ void initTree() {
   text = listNodes[1];
   name = listNodes[2];
   //System.out.println(level+" level root");
-  root = new MyNode(name,level,text);                   // DJUR SKAPAS
+  root = new MyNode(name,level,text);                   // RIKE SKAPAS
   treeModel = new DefaultTreeModel(root);
   tree = new JTree(treeModel);
-  buildTree();
+  while(sc.hasNextLine()){
+    buildTree();
+  }
 }
 
  private void initializeScanner(){
@@ -46,36 +48,44 @@ void initTree() {
 
 // New method
 private void buildTree() {
-    String[] listNodes2 = readInputFile();  //rike växter
+  level="";
+
+    String[] listNodes2 = readInputFile();  // division, DÄGG
     level = listNodes2[0];
     text = listNodes2[1];
     name = listNodes2[2];
     //System.out.println(name+" name child");
-
-  //while(level!=root.level){
+   while(sc.hasNextLine()&& !"Biosfär".equals(level)){
+      System.out.println(name+text+level+" före");
       buildTree(name, root, level, text);
-    //}
+      String[] listNodes = readInputFile();
+      level = listNodes[0];
+      text = listNodes[1];
+      name= listNodes[2];
+      System.out.println(name+text+level+" efter");
 }
-
+}
 // New method
 private void buildTree( String name, MyNode parent, String level, String text) {
 
-     MyNode child = new MyNode(name, level, text);                  // division och kryptogamer
-      parent.add(child); //detta skriver över det förra barnet      // KOPPLAR PÅ DÄGGDJUR
+     MyNode child = new MyNode(name, level, text);                  // division DÄGG = child
+     parent.add(child); //detta skriver över det förra barnet      // KOPPLAR PÅ DÄGGDJUR
       //System.out.println("buildtree2; namn på nod "+name);
       //System.out.println(sc.hasNextLine() );
 
-
       //child = division
 
-       if (sc.hasNextLine() ){
+       while (sc.hasNextLine() ){
          //System.out.println("kom in!");
              String[] listNodes = readInputFile();
              level = listNodes[0];
              text = listNodes[1];
              name= listNodes[2];
-             System.out.println(level+" level");
-             if(child.level!=level){
+             //System.out.println();
+             //System.out.println(level+" level");
+             //System.out.println(child.level+" child.level");
+             if(!child.level.equals(level)){
+               //System.out.println();
               // String[] listNodes = readInputFile();
                 // level = listNodes[0];
                 // text = listNodes[1];
@@ -85,9 +95,18 @@ private void buildTree( String name, MyNode parent, String level, String text) {
 
                 buildTree(name, child, level, text);    //    DETTA FÖR ATT SKAPA CHIMP
               }
-              else{
-                buildTree(name, (MyNode)child.getParent(), level, text);
-              }
+               else{
+              //   String linetemp=sc.nextLine();
+                 return;
+              //   System.out.println("syskon skapas");
+              //   listNodes = readInputFile();
+              //   level = listNodes[0];
+              //   text = listNodes[1];
+              //   name= listNodes[2];
+              //   // MyNode child = new MyNode(name, level, text);                  // division DÄGG = child
+              //   // parent.add(child); //detta skriver över det förra barnet      // KOPPLAR PÅ DÄGGDJUR
+            //     buildTree(name, parent, level, text);
+               }
           }
      }
 
