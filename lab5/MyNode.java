@@ -6,16 +6,10 @@ public class MyNode extends DefaultMutableTreeNode{
 
     String level;
     String text;
-    String name;
 
     MyNode(String name, String level, String text){
-        super();
+        super(name);
         this.level = level;
         this.text = text;
-        this.name=name;
-    }
-
-    public String toString(){
-      return this.name;
     }
 }

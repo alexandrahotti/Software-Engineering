@@ -11,7 +11,7 @@ static String line;
 
   inputReaderTest(){
       try{
-          sc = new Scanner(new File("Liv.txt"));
+          sc = new Scanner(new File("Liv.xml"));
       }
       catch(FileNotFoundException e){
           System.out.println(e);
@@ -20,9 +20,10 @@ static String line;
 
 
 public static void scan(){
+  System.out.println(sc.hasNextLine());
   while(sc.hasNextLine()){
       line = sc.nextLine();
-      System.out.println("hej");
+      //System.out.println(line);
   }
 }
 

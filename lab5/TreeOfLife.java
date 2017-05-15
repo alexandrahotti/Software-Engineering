@@ -13,32 +13,31 @@ String level;
 String name;
 String text;
 
-
 TreeOfLife(){
         super();
 //        attributes = new ArrayList<MyNode>;
     }
-
 // Overrides method in TreeFrame
 void initTree() {
-  System.out.println("i initTree");
+  //System.out.println("i initTree");
   initializeScanner();
-
+  line = sc.nextLine(); //för att ta bort första konstiga raden
   String[] listNodes = readInputFile();
   level = listNodes[0];
   text = listNodes[1];
   name = listNodes[2];
-  root = new MyNode(name,level,text);
+  //System.out.println(level+" level root");
+  root = new MyNode(name,level,text);                   // DJUR SKAPAS
   treeModel = new DefaultTreeModel(root);
   tree = new JTree(treeModel);
   buildTree();
 }
 
  private void initializeScanner(){
-     System.out.println("i initializeScanner");
+     //System.out.println("i initializeScanner");
      try{
-         sc = new Scanner(new File("Liv.txt"));
-         System.out.println("skapade en scanner");
+         sc = new Scanner(new File("Liv.xml"));
+         //System.out.println("skapade en scanner");
      }
      catch(FileNotFoundException e){
          System.out.println(e);
@@ -47,67 +46,75 @@ void initTree() {
 
 // New method
 private void buildTree() {
-    //File f = new File(directory);
-    String[] listNodes = readInputFile();
-    level = listNodes[0];
-    text = listNodes[1];
-    name = listNodes[2];
-    MyNode  f = new MyNode(name, level, text);
-    //String[] list = f.list();
-    System.out.println("i build Tree, ska in i readInputFile");
-    String[] listNodes2 = readInputFile();
-    String level = listNodes[0];
-    String text = listNodes[1];
-    String name = listNodes[2];
-    //for (int i=0; i<list.length; i++){
-        buildTree(name, root, level, text);
+    String[] listNodes2 = readInputFile();  //rike växter
+    level = listNodes2[0];
+    text = listNodes2[1];
+    name = listNodes2[2];
+    //System.out.println(name+" name child");
 
+  //while(level!=root.level){
+      buildTree(name, root, level, text);
+    //}
 }
 
 // New method
 private void buildTree( String name, MyNode parent, String level, String text) {
-      MyNode child = new MyNode(name, level, text);
-      parent.add(child);
-      // if (f.isDirectory()) {
-      //       String list[] = f.list();
 
-            while(child.level!=level){
-                String[] listNodes = readInputFile();
-                level = listNodes[0];
-                text = listNodes[1];
-                name= listNodes[2];
-                // if (level.equals("false")){
-                //   break;
-                // }
-                //for ( int i = 0; i < list.length; i++){
-                      buildTree(name, child, level, text);
-                //}
-       }
+     MyNode child = new MyNode(name, level, text);                  // division och kryptogamer
+      parent.add(child); //detta skriver över det förra barnet      // KOPPLAR PÅ DÄGGDJUR
+      //System.out.println("buildtree2; namn på nod "+name);
+      //System.out.println(sc.hasNextLine() );
 
-}
+
+      //child = division
+
+       if (sc.hasNextLine() ){
+         //System.out.println("kom in!");
+             String[] listNodes = readInputFile();
+             level = listNodes[0];
+             text = listNodes[1];
+             name= listNodes[2];
+             System.out.println(level+" level");
+             if(child.level!=level){
+              // String[] listNodes = readInputFile();
+                // level = listNodes[0];
+                // text = listNodes[1];
+                // name= listNodes[2];
+                // System.out.println(" name child "+name);
+                // System.out.println(" level child "+level);
+
+                buildTree(name, child, level, text);    //    DETTA FÖR ATT SKAPA CHIMP
+              }
+              else{
+                buildTree(name, (MyNode)child.getParent(), level, text);
+              }
+          }
+     }
 
 //Biosfär-Rike-Division-Klass-Familj-Art
 private String[] readInputFile (){
-
+      //System.out.println("kom in in readInputFile");
       String [] nodeAttributes = new String[3];
 
       if(sc.hasNextLine()){
+      //System.out.println("has new line ");
       line = sc.nextLine();
-      System.out.println(line);
-      }
-      else{
-        return nodeAttributes;
-      }
-      String lineTemp = line.substring(1); //tar bort <
+      //System.out.println(line+" lineeeeeeeeeeeeeee");
+
+      String lineTemp = line.replaceAll("<", "");
+      //System.out.println(lineTemp+"line efter borttagning av <");
       String linetemptemp=lineTemp;
-      String character =linetemptemp.substring(0);
+      String character =linetemptemp.substring(0,1);
       if(character.equals("/")){  //isf var det en leaf
-          lineTemp = lineTemp.substring(1);
+          lineTemp = lineTemp.replaceAll("/", "");
           lineTemp = lineTemp.replaceAll(">", "");
-          nodeAttributes[3] = lineTemp;
+          nodeAttributes[0] = lineTemp;
       }
       else{
-          String [] tokens = line.split(">");
+          //System.out.println(line+" lineeeeeeeeeeeeeee");
+          String [] tokens = lineTemp.split(">");
+
+          //System.out.println(tokens[0]+" tokens[0]");
           String levelSection = tokens[0];
           String textSection = tokens[1];
           String [] levSecTokens =levelSection.split(" ");
@@ -115,10 +122,19 @@ private String[] readInputFile (){
           nodeAttributes[1] = textSection;
 
           String [] namesectemp = levSecTokens[1].split("=");
-          //String namesectemp2=namesectemp[1];
-          String name = namesectemp[1].replaceAll("\"", "");
+          name = namesectemp[1].replaceAll("\"", "");
           nodeAttributes[2] = name;
+          // System.out.println();
+          // System.out.println(nodeAttributes[2]+" nodeAttributes[2]");
+          // System.out.println(nodeAttributes[1]+" nodeAttributes[1]");
+          // System.out.println(nodeAttributes[0]+" nodeAttributes[0]");
       }
+    }
+      else{
+        //System.out.println("inte härrrrrrrrrrrrrrrrrr");
+        return nodeAttributes;
+      }
+      //System.out.println("return blev korrekt");
       return nodeAttributes;
   }
 
