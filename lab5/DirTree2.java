@@ -6,7 +6,7 @@ import java.io.*;
 
 class DirTree2 extends TreeFrame {
 
-    static String directory=".";
+    static String directory="."; //. medför att the working directory blir ens path
 
     // Overrides method in TreeFrame
     void initTree() {
@@ -31,9 +31,9 @@ class DirTree2 extends TreeFrame {
 
     // New method
     private void buildTree( File f, DefaultMutableTreeNode parent) {
-	DefaultMutableTreeNode child =
-	    new DefaultMutableTreeNode( f.toString() );
-	parent.add(child);
+	DefaultMutableTreeNode child = new DefaultMutableTreeNode(f.toString());
+      System.out.println(f.toString()+" tostring var detta");
+	     parent.add(child);
 	if (f.isDirectory()) {
 	    String list[] = f.list();
 	    for ( int i = 0; i < list.length; i++ )

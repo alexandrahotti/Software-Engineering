@@ -9,7 +9,7 @@ import java.awt.event.*;
 class TreeFrame extends JFrame implements ActionListener {
     JCheckBox box;
     JTree tree;
-    DefaultMutableTreeNode root;
+    MyNode root;
     DefaultTreeModel treeModel;
     JPanel controls;
     static final String closeString = " Close ";
@@ -61,9 +61,9 @@ class TreeFrame extends JFrame implements ActionListener {
     // ***** Override initTree in subclass
     // ***** create root, treeModel and tree in the new initTree
     void initTree(){
-    	root = new DefaultMutableTreeNode("TestString");
-    	treeModel = new DefaultTreeModel(root);
-    	tree = new JTree(treeModel);
+    //	root = new MyNode("TestString");
+//    	treeModel = new DefaultTreeModel(root);
+//    	tree = new JTree(treeModel);
     }
 
     // ***** showDetails can also be overridden in a subclass *****

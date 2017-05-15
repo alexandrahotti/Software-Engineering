@@ -46,7 +46,7 @@ public String toString(){
     String output = this.itemName;
     for(int i=0; i<this.components.size(); i++){
         Component comp = this.components.get(i);
-        output += " " + comp;
+        output += " " + comp;ssa
     }
     return output;
 }
