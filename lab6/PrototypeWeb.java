@@ -47,7 +47,7 @@ public void actionPerformed(ActionEvent evt) {
               webReader.showPage(url);
           }
           catch(IOException e){
-              dialogueBox.showMessageDialog(frame, e.getMessage());
+              dialogueBox.showMessageDialog(frame, "Invalid URL adress: " + url);
           }
       }
       else{
