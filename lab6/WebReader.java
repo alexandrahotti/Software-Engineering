@@ -7,7 +7,6 @@
    import javax.swing.text.html.*;
    import javax.swing.text.*;
 
-
 public class WebReader extends JEditorPane{
 
   JEditorPane webReader;
