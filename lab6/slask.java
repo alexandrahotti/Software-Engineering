@@ -15,20 +15,20 @@ InputStreamReader reader;
 HTMLEditorKit htmlKit;
 HTMLDocument htmlDoc;
 String [][] outputMatrix;
-String [] adresses;
-String [] texts;
-int i=0;
+int elements=0;
+int rowIndex = 0;
+int columnIndex = 0;
 
 public String [][] loadWebPage() throws IOException{
 
    try{
        in = new URL(webPage).openConnection().getInputStream();
        reader = new InputStreamReader(in);
+
        htmlKit = new HTMLEditorKit();
        htmlDoc = new HTMLDocument();
+
        outputMatrix = new String [50][2];
-       adresses = new String [50];
-       texts = new String [50];
 
        htmlDoc.putProperty("IgnoreCharsetDirective", Boolean.TRUE);
   //     htmlDoc = (HTMLDocument) htmlKit.createDefaultDocument();
@@ -41,37 +41,52 @@ public String [][] loadWebPage() throws IOException{
        for(HTMLDocument.Iterator htmlIterator = htmlDoc.getIterator(HTML.Tag.A); htmlIterator.isValid(); htmlIterator.next()){
               AttributeSet attributes = htmlIterator.getAttributes();
               String attributesHREF = (String) attributes.getAttribute(HTML.Attribute.HREF);
-              int startOffset = htmlIterator.getStartOffset();
-			        int endOffset = htmlIterator.getEndOffset();
-			        int length = endOffset - startOffset;
-		          String text = htmlDoc.getText(startOffset, endOffset);
-			        //System.out.println(" - " + text);
-              if(!(i==50)){
-                  System.out.println("heeeeeeeeeeeej");
-                  adresses[i] = attributesHREF;
-                  texts[i] = text;
-                  for(int m = 0; m<adresses.length; m++){
-                    System.out.println("i adresses har vi: ");
-                    System.out.println(adresses[i]);
+
+              if(elements!=100){
+                  if(rowIndex==49){
+                      rowIndex = 0;
+                      columnIndex++;
+                      System.out.println("Byter till andra kolumnen");
+                  }
+                  if (columnIndex == 0){
+                      outputMatrix[rowIndex][columnIndex] = attributesHREF;
+                      elements ++;
+                      rowIndex ++;
+                      System.out.println("kommer HIT");
+                      System.out.println("rowIndex är: "+ rowIndex);
+                      System.out.println("columnIndex är: "+ columnIndex);
                   }
               }
-              i++;
-        }
-	 }
+
+              int startOffset = htmlIterator.getStartOffset();
+              int endOffset = htmlIterator.getEndOffset();
+              int length = endOffset - startOffset;
+              String text = htmlDoc.getText(startOffset, endOffset);
+
+              System.out.println("Ska in i loopen");
+    //          System.out.println(attributesHREF);
+    //          System.out.println(text);
+
+                  if(columnIndex==1){
+                      System.out.println("kommer hiiiiiiiiiiit");
+                      outputMatrix[rowIndex][columnIndex] = text;
+                      elements ++;
+                      rowIndex ++;
+                  }
+  //            System.out.println(" - " + text);
+
+  //      System.out.println(attributesHREF);
+
+//		    System.exit(0);
+
+   }
+ }
    catch(BadLocationException | IOException e){
        System.out.println("Failed to load web page.");
    }
+  return outputMatrix;
+}
 
-int length=adresses.length;
-int row=0;
-int col1=0;
-int col2=1;
-for(int j=0; j<length;j++){
-  outputMatrix[row][col1]=adresses[j];
-  outputMatrix[row][col2]=texts[j];
-}
-return outputMatrix;
-}
 public static void main(String[] args){
     WebLinks webLinks = new WebLinks();
     try{
