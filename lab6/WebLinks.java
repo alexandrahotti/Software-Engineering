@@ -25,7 +25,7 @@ public void loadWebPage() throws IOException{
        htmlDoc = new HTMLDocument();
 
        htmlDoc.putProperty("IgnoreCharsetDirective", Boolean.TRUE);
-//       htmlDoc = (HTMLDocument) htmlKit.createDefaultDocument();
+  //     htmlDoc = (HTMLDocument) htmlKit.createDefaultDocument();
 
       // while(reader.ready())
     //   System.out.println("Kom in i while loopen");
@@ -34,13 +34,18 @@ public void loadWebPage() throws IOException{
        htmlKit.read(reader, htmlDoc, 0); //BadLocationException kopplat till read
   //     System.out.println(htmlDoc);
 
-
        for(HTMLDocument.Iterator htmlIterator = htmlDoc.getIterator(HTML.Tag.A); htmlIterator.isValid(); htmlIterator.next()){
               AttributeSet attributes = htmlIterator.getAttributes();
               String attributesHREF = (String) attributes.getAttribute(HTML.Attribute.HREF);
-  			      System.out.println(attributesHREF);
-       }
-    }
+  			    //  System.out.println(attributesHREF);
+              int startOffset = htmlIterator.getStartOffset();
+			        int endOffset = htmlIterator.getEndOffset();
+			        int length = endOffset - startOffset;
+		          String text = htmlDoc.getText(startOffset, endOffset);
+			        System.out.println(" - " + text);
+		    }
+		    System.exit(0);
+	 }
    catch(BadLocationException | IOException e){
        System.out.println("Failed to load web page.");
    }
