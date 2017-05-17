@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
-public class WebLinks{
+public class WebModel{
 
 String webPage;// = "http://www.nada.kth.se/~henrik";
 InputStream in;
@@ -88,6 +88,6 @@ public String [][] loadWebPage(String webPage) throws IOException{
 }
 
 public static void main(String[] args){
-    WebLinks webLinks = new WebLinks();
+    WebModel webModel = new WebModel();
   }
 }
