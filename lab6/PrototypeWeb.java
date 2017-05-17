@@ -1,3 +1,9 @@
+//
+//    Authors:
+//    Helena Rosenzweig & Alexandra Hotti
+//
+//
+
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -23,51 +29,47 @@ String [] header;
 String webPage;// = "http://www.nada.kth.se/~snilsson"; //"http://www.nada.kth.se/~henrik";
 WebLinks webLinks;
 
-// Påbörjar "Använd matrisen i huvudprogrammet"-delen
-
 PrototypeWeb(){
-  table = new JTable(50,2);
-  rightLinks = new JScrollPane(table);
-  frame =new JFrame();
-  header = new String[2];
-  header[0] = "ADRESS";
-  header[1] ="BENÄMNING";
+      table = new JTable(50,2);
+      rightLinks = new JScrollPane(table);
+      frame =new JFrame();
+      header = new String[2];
+      header[0] = "ADRESS";
+      header[1] ="BENÄMNING";
 
-  webReader=new WebReader();
-  leftLinks = new JScrollPane(webReader);
-  textField = new JTextField(20);
+      webReader=new WebReader();
+      leftLinks = new JScrollPane(webReader);
+      textField = new JTextField(20);
+      webLinks = new WebLinks();
 
-  webLinks = new WebLinks();
+      textField.addActionListener(this);
 
-  textField.addActionListener(this);
+      leftLinks.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+      frame.setMinimumSize(new Dimension(700, 500));
+      frame.add(textField,BorderLayout.NORTH);
+      frame.add(leftLinks,BorderLayout.CENTER);
+      frame.add(rightLinks,BorderLayout.EAST);
+      frame.setVisible(true);
+    }
 
-  leftLinks.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-  frame.setMinimumSize(new Dimension(700, 500));
-  frame.add(textField,BorderLayout.NORTH);
-  frame.add(leftLinks,BorderLayout.CENTER);
-//  frame.add(table,BorderLayout.EAST);
-  frame.add(rightLinks,BorderLayout.EAST);
-  frame.setVisible(true);
-}
-
+// Listens after user to press "ENTER"
 public void actionPerformed(ActionEvent evt) {
       String url = textField.getText();
       if (url != null){
           try{
+              // calls method loadWebPage and loads table with URL links and tags
               table.setModel(new DefaultTableModel(webLinks.loadWebPage(url), header));
               webReader.showPage(url);
           }
           catch(IOException e){
-              dialogueBox.showMessageDialog(frame, "Invalid URL adress: " + url);
+              // displays dialogueBox in case invalid url was entered
+              dialogueBox.showMessageDialog(frame, "Invalid URL adress");
           }
-      }
-      else{
-          System.err.println("Couldn't find file: TextSamplerDemoHelp.html");
-      }
+     }
 }
 
 public static void main(String args[]){
-  PrototypeWeb prototype = new PrototypeWeb();
+      PrototypeWeb prototype = new PrototypeWeb();
 }
 
 }

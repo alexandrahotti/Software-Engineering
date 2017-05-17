@@ -1,3 +1,9 @@
+//
+//    Authors:
+//    Helena Rosenzweig & Alexandra Hotti
+//
+//
+
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -20,6 +26,7 @@ ArrayList<String> adresses;
 ArrayList<String> texts;
 int i=0;
 
+// loads web page from user input
 public String [][] loadWebPage(String webPage) throws IOException{
     try{
        in = new URL(webPage).openConnection().getInputStream();
@@ -28,16 +35,19 @@ public String [][] loadWebPage(String webPage) throws IOException{
        htmlDoc = new HTMLDocument();
        htmlDoc.putProperty("IgnoreCharsetDirective", Boolean.TRUE);
 
+       // creates htmlKit object that reads html, and stores it in htmlDoc
        htmlKit = new HTMLEditorKit();
        htmlKit.read(reader, htmlDoc, 0);
 
+       // creates output matrix, that will store URL and tags
        outputMatrix = new String [50][2];
-       //adresses = new String [50];
-       //texts = new String [50];
 
+       // creates arrays that will temporarily store URL and tags, before
+       // placing them in outputMatrix
        adresses = new ArrayList<>();
        texts = new ArrayList<>();
 
+       // creates iterator object that will iterator over content in htmlDoc, looking for Tag.A
        HTMLDocument.Iterator htmlIterator = htmlDoc.getIterator(HTML.Tag.A);
 
        while(htmlIterator.isValid()){
@@ -59,39 +69,23 @@ public String [][] loadWebPage(String webPage) throws IOException{
    catch(BadLocationException | IOException e){
        System.out.println("Failed to load web page.");
        System.out.println(e);
+       return null;
    }
-// System.out.println();
-// System.out.println("MATRISEN");
-// for (int h=0; h<2;h++){
-//   for(int g=0; g<adresses.length;g++){
-//       System.out.println(outputMatrix[g][h]);
-//   }
-// }
-    System.out.println("Trätt ut ur for iteratorloopen");
-  //  int length=adresses.size();
+
+   // Starts storing URL and tags in matrix
     int row=0;
     int col1=0;
     int col2=1;
-
-    System.out.println(adresses.size());
 
     for(int j=0; j<adresses.size();j++){
         outputMatrix[row][col1]=adresses.get(j);
         outputMatrix[row][col2]=texts.get(j);
         row++;
     }
-    System.out.println("Når vi till matrisen?");
     return outputMatrix;
 }
 
 public static void main(String[] args){
     WebLinks webLinks = new WebLinks();
-//    try{
-//        webLinks.loadWebPage(webPage);
-//    }
-//    catch(IOException e){
-//        System.out.println("Failed to load web page.");
-//  }
   }
 }
-//http://www.programcreek.com/java-api-examples/index.php?class=javax.swing.text.html.HTMLDocument&method=Iterator
