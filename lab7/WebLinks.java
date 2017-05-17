@@ -79,7 +79,7 @@ public String [][] loadWebPage(String webPage) throws IOException{
     int col1=0;
     int col2=1;
 
-    for(int j=0; j<50;j++){
+    for(int j=0; j<adresses.size() && j<50;j++){
         outputMatrix[row][col1]=adresses.get(j);
         outputMatrix[row][col2]=texts.get(j);
         row++;

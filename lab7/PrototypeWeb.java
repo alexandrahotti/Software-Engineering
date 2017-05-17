@@ -44,7 +44,9 @@ PrototypeWeb(){
           public void hyperlinkUpdate(HyperlinkEvent e) {
               if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
                 try{
-                  webReader.setPage(e.getURL()); // Do something with e.getURL() here
+                    textField.setText(e.getURL().toString());
+                    webReader.showPage(e.getURL().toString()); // Do something with e.getURL() here
+                    table.setModel(new DefaultTableModel(webLinks.loadWebPage(e.getURL().toString()), header));
                 }
                 catch(IOException error){
                     // displays dialogueBox in case invalid url was entered
