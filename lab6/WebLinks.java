@@ -37,14 +37,16 @@ public String [][] loadWebPage(String webPage) throws IOException{
 
        adresses = new ArrayList<>();
        texts = new ArrayList<>();
+
        HTMLDocument.Iterator htmlIterator = htmlDoc.getIterator(HTML.Tag.A);
+
        while(htmlIterator.isValid()){
             //htmlKit.read(reader, htmlDoc,0);
               int startOffset = htmlIterator.getStartOffset();
 			        int endOffset = htmlIterator.getEndOffset();
 			        int length = endOffset - startOffset;
 
-              String text = htmlDoc.getText(startOffset, endOffset);
+              String text = htmlDoc.getText(startOffset, length);
 
               AttributeSet attributes = htmlIterator.getAttributes();
               String attributesHREF = (String) attributes.getAttribute(HTML.Attribute.HREF);
