@@ -15,11 +15,9 @@ public class WebReader extends JEditorPane{
     super();
     setEditable(false);
     }
-
     public void showPage(String webAdress) throws IOException{
         this.setPage(webAdress);
     }
-
     public static void main(String args[]){
       WebReader webReader = new WebReader();
     }

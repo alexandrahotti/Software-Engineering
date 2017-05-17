@@ -20,7 +20,7 @@ JScrollPane rightLinks;
 JTextField textField;
 JOptionPane dialogueBox;
 String [] header;
-String webPage = "http://www.nada.kth.se/~henrik";
+String webPage;// = "http://www.nada.kth.se/~snilsson"; //"http://www.nada.kth.se/~henrik";
 WebLinks webLinks;
 
 // Påbörjar "Använd matrisen i huvudprogrammet"-delen
@@ -52,10 +52,8 @@ PrototypeWeb(){
 
 public void actionPerformed(ActionEvent evt) {
       String url = textField.getText();
-
       if (url != null){
           try{
-
               table.setModel(new DefaultTableModel(webLinks.loadWebPage(url), header));
               webReader.showPage(url);
           }
