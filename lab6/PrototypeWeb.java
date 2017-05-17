@@ -19,6 +19,8 @@ JTextField textField;
 JOptionPane dialogueBox;
 static String newline = "\n";
 
+// Påbörjar "Använd matrisen i huvudprogrammet"-delen
+
 PrototypeWeb(){
   table = new JTable(50,2);
   rightLinks = new JScrollPane(table);
