@@ -33,9 +33,11 @@ public String [][] loadWebPage() throws IOException{
        htmlDoc.putProperty("IgnoreCharsetDirective", Boolean.TRUE);
   //     htmlDoc = (HTMLDocument) htmlKit.createDefaultDocument();
 
-       System.out.println((char)reader.read());
+    //   System.out.println((char)reader.read());
        // Lägger in inputStream i ett html dokument
+       System.out.println("SKA LÄSA AV HTML OCH LÄGGA I HTMLDOC");
        htmlKit.read(reader, htmlDoc, 0); //BadLocationException kopplat till read
+       System.out.println("HAR LÄST AV HTML OCH LÄGGA I HTMLDOC");
   //     System.out.println(htmlDoc);
 
        for(HTMLDocument.Iterator htmlIterator = htmlDoc.getIterator(HTML.Tag.A); htmlIterator.isValid(); htmlIterator.next()){
@@ -46,32 +48,48 @@ public String [][] loadWebPage() throws IOException{
 			        int length = endOffset - startOffset;
 		          String text = htmlDoc.getText(startOffset, endOffset);
 			        //System.out.println(" - " + text);
-              if(!(i==50)){
+
+              System.out.println("i är: " +i);
+
+              if(i!=50){
                   System.out.println("heeeeeeeeeeeej");
                   adresses[i] = attributesHREF;
                   texts[i] = text;
-                  for(int m = 0; m<adresses.length; m++){
-                    System.out.println("i adresses har vi: ");
-                    System.out.println(adresses[i]);
-                  }
+                  //for(int m = 0; m<adresses.length; m++){
+                  System.out.println("i adresses & text har vi: ");
+                  System.out.println(adresses[i]);
+                  System.out.println(texts[i]);
+                  //}
               }
               i++;
+              System.out.println("Efter loopen är i: "+i);
         }
+        System.out.println("Trätt ut ur for iteratorloopen");
+        int length=adresses.length;
+        int row=0;
+        int col1=0;
+        int col2=1;
+        for(int j=0; j<length;j++){
+          outputMatrix[row][col1]=adresses[j];
+          outputMatrix[row][col2]=texts[j];
+          row++;
+        }
+
+
 	 }
    catch(BadLocationException | IOException e){
        System.out.println("Failed to load web page.");
    }
+// System.out.println();
+// System.out.println("MATRISEN");
+// for (int h=0; h<2;h++){
+//   for(int g=0; g<adresses.length;g++){
+//       System.out.println(outputMatrix[g][h]);
+//   }
+// }
+          return outputMatrix;
+}
 
-int length=adresses.length;
-int row=0;
-int col1=0;
-int col2=1;
-for(int j=0; j<length;j++){
-  outputMatrix[row][col1]=adresses[j];
-  outputMatrix[row][col2]=texts[j];
-}
-return outputMatrix;
-}
 public static void main(String[] args){
     WebLinks webLinks = new WebLinks();
     try{
@@ -82,3 +100,4 @@ public static void main(String[] args){
   }
 }
 }
+//http://www.programcreek.com/java-api-examples/index.php?class=javax.swing.text.html.HTMLDocument&method=Iterator
