@@ -36,9 +36,12 @@ JButton forward;
 JButton backward;
 int currentIndex;
 JPanel buttonPanel;
+BookMarkLibrary  bookMarkLibrary;
 ArrayList<String> visitedLinks;
 
 WebView(){
+
+      bookMarkLibrary = new BookMarkLibrary();
       table = new JTable(50,2);
       rightLinks = new JScrollPane(table);
       frame =new JFrame();
