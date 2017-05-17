@@ -61,7 +61,6 @@ WebView(){
     }
 });
 
-
       forward = new JButton();
       backward = new JButton();
       forward.setText("FORWARD");
@@ -95,8 +94,6 @@ WebView(){
       frame.add(rightLinks,BorderLayout.EAST);
       frame.add(buttonPanel, BorderLayout.SOUTH);
 
-
-
       frame.setVisible(true);
     }
 
@@ -122,10 +119,8 @@ public void selectionButtonPressed(JButton button, String command){
     else{
           if(command.equals("FORWARD")){
               if(currentIndex < numberOfIndexes){
-                  System.out.println("currentIndex i forward är: "+currentIndex);
                   currentIndex = currentIndex + 1;
                   String url = visitedLinks.get(currentIndex);
-                  System.out.println("url i forward är: "+url);
                   updatepage(url);
 
               }
@@ -134,11 +129,9 @@ public void selectionButtonPressed(JButton button, String command){
               }
           }
           else if(command.equals("BACKWARD")){
-              System.out.println("currentIndex i backward är: "+currentIndex);
               if (currentIndex>0){
                   currentIndex = currentIndex-1;
                   String url = visitedLinks.get(currentIndex);
-                  System.out.println("url i backward är: "+url);
                   updatepage(url);
                   currentIndex = currentIndex --;
               }
