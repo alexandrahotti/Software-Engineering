@@ -7,6 +7,8 @@ import javax.swing.event.*;
 import javax.swing.text.html.*;
 import javax.swing.text.*;
 import java.io.IOException;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 
 class PrototypeWeb implements ActionListener{
 
@@ -17,7 +19,9 @@ JScrollPane leftLinks;
 JScrollPane rightLinks;
 JTextField textField;
 JOptionPane dialogueBox;
-static String newline = "\n";
+String [] header;
+String webPage = "http://www.nada.kth.se/~henrik";
+WebLinks webLinks;
 
 // Påbörjar "Använd matrisen i huvudprogrammet"-delen
 
@@ -25,11 +29,15 @@ PrototypeWeb(){
   table = new JTable(50,2);
   rightLinks = new JScrollPane(table);
   frame =new JFrame();
+  header = new String[2];
+  header[0] = "ADRESS";
+  header[1] ="BENÄMNING";
 
   webReader=new WebReader();
   leftLinks = new JScrollPane(webReader);
   textField = new JTextField(20);
-  //label= new JLabel();
+
+  webLinks = new WebLinks();
 
   textField.addActionListener(this);
 
@@ -44,8 +52,11 @@ PrototypeWeb(){
 
 public void actionPerformed(ActionEvent evt) {
       String url = textField.getText();
+
       if (url != null){
           try{
+
+              table.setModel(new DefaultTableModel(webLinks.loadWebPage(url), header));
               webReader.showPage(url);
           }
           catch(IOException e){

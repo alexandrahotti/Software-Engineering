@@ -9,7 +9,7 @@ import javax.swing.text.*;
 
 public class WebLinks{
 
-String webPage = "http://www.nada.kth.se/~henrik";
+String webPage;// = "http://www.nada.kth.se/~henrik";
 InputStream in;
 InputStreamReader reader;
 HTMLEditorKit htmlKit;
@@ -19,7 +19,7 @@ String [] adresses;
 String [] texts;
 int i=0;
 
-public String [][] loadWebPage() throws IOException{
+public String [][] loadWebPage(String webPage) throws IOException{
 
    try{
        in = new URL(webPage).openConnection().getInputStream();
@@ -56,25 +56,14 @@ public String [][] loadWebPage() throws IOException{
                   adresses[i] = attributesHREF;
                   texts[i] = text;
                   //for(int m = 0; m<adresses.length; m++){
-                  System.out.println("i adresses & text har vi: ");
-                  System.out.println(adresses[i]);
-                  System.out.println(texts[i]);
+        //          System.out.println("i adresses & text har vi: ");
+        //          System.out.println(adresses[i]);
+        //          System.out.println(texts[i]);
                   //}
               }
               i++;
               System.out.println("Efter loopen är i: "+i);
-        }
-        System.out.println("Trätt ut ur for iteratorloopen");
-        int length=adresses.length;
-        int row=0;
-        int col1=0;
-        int col2=1;
-        for(int j=0; j<length;j++){
-          outputMatrix[row][col1]=adresses[j];
-          outputMatrix[row][col2]=texts[j];
-          row++;
-        }
-
+    }
 
 	 }
    catch(BadLocationException | IOException e){
@@ -87,17 +76,29 @@ public String [][] loadWebPage() throws IOException{
 //       System.out.println(outputMatrix[g][h]);
 //   }
 // }
-          return outputMatrix;
+    System.out.println("Trätt ut ur for iteratorloopen");
+    int length=adresses.length;
+    int row=0;
+    int col1=0;
+    int col2=1;
+    for(int j=0; j<length;j++){
+      outputMatrix[row][col1]=adresses[j];
+      outputMatrix[row][col2]=texts[j];
+      row++;
+    }
+    System.out.println("Når vi till matrisen?");
+    return outputMatrix;
+
 }
 
 public static void main(String[] args){
     WebLinks webLinks = new WebLinks();
-    try{
-        webLinks.loadWebPage();
-    }
-    catch(IOException e){
-        System.out.println("Failed to load web page.");
-  }
+//    try{
+//        webLinks.loadWebPage(webPage);
+//    }
+//    catch(IOException e){
+//        System.out.println("Failed to load web page.");
+//  }
 }
 }
 //http://www.programcreek.com/java-api-examples/index.php?class=javax.swing.text.html.HTMLDocument&method=Iterator
