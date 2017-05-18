@@ -7,8 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
 import java.io.Serializable;
+
+// Start Serializable solution
 
 public class BookMarkLibrary{
 
@@ -26,6 +27,7 @@ public class BookMarkLibrary{
     public void addBookMark(String name, String url){
         BookMark bookMark = new BookMark(name, url);
         bookMarks.add(bookMark);
+
         // Write objects to file
     }
 
@@ -56,7 +58,7 @@ public class BookMarkLibrary{
         			     System.out.println("File not found");
         		} catch (IOException e) {
         			     System.out.println("Error initializing stream");
-        		}
+      	}
     }
 
     public void updateBookMarks(){
