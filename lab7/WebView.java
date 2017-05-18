@@ -46,7 +46,6 @@ BookMarkLibrary  bookMarkLibrary;
 ArrayList<String> visitedLinks;
 
 WebView(){
-//"http://www.nada.kth.se/~henrik"
       table = new JTable(50,2);
       rightLinks = new JScrollPane(table);
       frame =new JFrame();
@@ -61,8 +60,9 @@ WebView(){
       saveBookMark = new JButton();
       handleBookMarks = new JButton();
 
-      saveBookMark.setText("SAVE BOOKMARK");
-      handleBookMarks.setText("HANDLE BOOKMARKS");
+      visitBookMark.setText("GO TO");
+      saveBookMark.setText("SAVE");
+      handleBookMarks.setText("REMOVE");
 
       frame.addWindowListener(new WindowAdapter() {
         public void windowClosing(WindowEvent we) {
@@ -72,16 +72,40 @@ WebView(){
 
       saveBookMark.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
+          if(visitedLinks.isEmpty()){
+              dialogueBox.showMessageDialog(frame, "   This is an invalid website.\n You can't book mark this page!");
+          }
+          else{
           bookMarkLibrary.addBookMark(enterName(), textField.getText());
         }
-      } );
+        }
+      });
 
+      visitBookMark.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            try{
+              String bookMarkName = visitSavedBookMark();
+              for(int i = 0; i < bookMarkLibrary.bookMarks.size(); i++){
+                  if(bookMarkLibrary.bookMarks.get(i).name.equals(bookMarkName)){
+                      BookMark bookMark = bookMarkLibrary.bookMarks.get(i);
+                      webReader.showPage(bookMark.url);
+                    }
+                }
+            }
+            catch(IOException | NullPointerException | ArrayIndexOutOfBoundsException error){
+                  dialogueBox.showMessageDialog(frame, "No previously saved book marks.");
+            }
+        }
+      });
 
       handleBookMarks.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           if(bookMarkLibrary.bookMarks.size()>0){
-          bookMarkLibrary.removeBookMark(removeName());
-        }
+              bookMarkLibrary.removeBookMark(removeName());
+          }
+          else{
+              dialogueBox.showMessageDialog(frame, "No book marks to delete.");
+          }
         }
       } );
 
@@ -125,6 +149,7 @@ WebView(){
       buttonPanel.add(forward,BorderLayout.EAST);
       buttonPanel.add(saveBookMark, BorderLayout.EAST);
       buttonPanel.add(handleBookMarks, BorderLayout.EAST);
+      buttonPanel.add(visitBookMark, BorderLayout.EAST);
 
       leftLinks.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
       frame.setMinimumSize(new Dimension(700, 500));
@@ -143,6 +168,7 @@ public String enterName(){
 
 public String removeName(){
     String [] bookMarkNames = new String[bookMarkLibrary.bookMarks.size()];
+    bookMarkLibrary.sortBookMarks();
     for(int i = 0; i<bookMarkLibrary.bookMarks.size(); i++){
         bookMarkNames[i] = bookMarkLibrary.bookMarks.get(i).name;
     }
@@ -157,7 +183,22 @@ public String removeName(){
         return s;
 }
 
-
+public String visitSavedBookMark(){
+    String [] bookMarkNames = new String[bookMarkLibrary.bookMarks.size()];
+    bookMarkLibrary.sortBookMarks();
+    for(int i = 0; i<bookMarkLibrary.bookMarks.size(); i++){
+        bookMarkNames[i] = bookMarkLibrary.bookMarks.get(i).name;
+    }
+        String s = (String) dialogueBoxBookMarks.showInputDialog(
+                                                 frame,
+                                                 "Which book mark do you want to visit?",
+                                                 "Display book marks",
+                                                 dialogueBoxBookMarks.QUESTION_MESSAGE,
+                                                 null,
+                                                 bookMarkNames,
+                                                 bookMarkNames[0]);
+        return s;
+}
 
 
 public void updatepage(String url){

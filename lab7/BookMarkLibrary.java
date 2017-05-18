@@ -11,12 +11,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Comparator;
 
-// Start Serializable solution
-
 public class BookMarkLibrary implements Serializable{
 
-  //  FileInputStream inputStream;
-	//  ObjectInputStream objectInputStream;
     ArrayList<BookMark> bookMarks;
 
     BookMarkLibrary(){
@@ -33,15 +29,11 @@ public class BookMarkLibrary implements Serializable{
         BookMark bookMark = new BookMark(name, url);
         bookMarks.add(bookMark);
         serializeBookMark();
-        // Write objects to file
     }
 
     public String removeBookMark(String namer){
         for(int i = 0; i < bookMarks.size(); i++){
-            // System.out.println("bookremove innan");
-            // System.out.println(bookMarks.get(i)+".get(i)");
-            // System.out.println(name+"name");
-
+            try{
             if(bookMarks.get(i).name.equals(namer)){
 
                 System.out.println("bookremove efter");
@@ -49,6 +41,10 @@ public class BookMarkLibrary implements Serializable{
                 serializeBookMark();
                 return "Removed book mark.";
             }
+          }
+          catch(NullPointerException e){
+               return null;
+          }
         }
         return "Book mark does not exist.";
     }
@@ -79,13 +75,10 @@ public class BookMarkLibrary implements Serializable{
               objectInputStream.close();
               inputStream.close();
          }
-         catch(IOException error1) {
-              error1.printStackTrace();
+         catch(IOException | ArrayIndexOutOfBoundsException error1) {
               return;
          }
          catch(ClassNotFoundException error2) {
-              System.out.println("Employee class not found");
-              error2.printStackTrace();
               return;
         }
     }
