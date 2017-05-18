@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Collections;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,28 +12,27 @@ import java.io.Serializable;
 
 // Start Serializable solution
 
-public class BookMarkLibrary{
+public class BookMarkLibrary implements Serializable{
 
-    static Scanner sc;
-    FileInputStream inputStream
-	  ObjectInputStream objectInputStream
+  //  FileInputStream inputStream;
+	//  ObjectInputStream objectInputStream;
     ArrayList<BookMark> bookMarks;
 
     BookMarkLibrary(){
         bookMarks = new ArrayList();
-        sc = new Scanner();
-
+        deserializeBookMark();
     }
 
     public void addBookMark(String name, String url){
         BookMark bookMark = new BookMark(name, url);
         bookMarks.add(bookMark);
+        serializeBookMark();
 
         // Write objects to file
     }
 
     public String removeBookMark(String name){
-        for(int i = 0; i < bookMark.size(); i++){
+        for(int i = 0; i < bookMarks.size(); i++){
             if(bookMarks.get(i).equals(name)){
                 bookMarks.remove(i);
                 return "Removed book mark.";
@@ -43,37 +43,48 @@ public class BookMarkLibrary{
         }
     }
 
-    public void initBookMarkLibrary(){
+    public void serializeBookMark(){
         try {
-        			inputStream = new FileInputStream(new File("bookMarks.txt"));
-        			objectInputStream = new ObjectInputStream(inputStream);
+             new FileOutputStream("/tmp/bookMarks.ser").close();
+             FileOutputStream outputStream = new FileOutputStream("/tmp/bookMarks.ser");
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+             objectOutputStream.writeObject(bookMarks);
 
-        			// Read objects
-            while(true){
-        			     BookMark bookMark = (BookMark) objectInputStream.readObject();
-                   addBookMark(bookMark.name, bookMark.url);
-            }
-        		}
-            catch (FileNotFoundException e) {
-        			     System.out.println("File not found");
-        		} catch (IOException e) {
-        			     System.out.println("Error initializing stream");
-      	}
+            // for(BookMark bookMark: bookMarks){
+            //     objectOutputStream.writeObject(bookMark);
+            // }
+
+             objectOutputStream.close();
+             outputStream.close();
+      }
+      catch(IOException error) {
+             error.printStackTrace();
+      }
     }
 
-    public void updateBookMarks(){
-
-        try{
-            new FileOutputStream("bookMarks.txt").close();
-            outputStream = new FileOutputStream(new File("bookMarks.txt"));
-            objectOutputStream = new ObjectOutputStream(outputStream);
-        }
-
-        for(BookMark bookMark: bookMarks){
-            objectOutputStream.writeObject(bookMark);
+    public void deserializeBookMark(){
+        try {
+            //  List<BookMark> objectBookMarks = null;
+              FileInputStream inputStream = new FileInputStream("/tmp/bookMarks.ser");
+              ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+              objectBookMarks = objectInputStream.readObject();
+              for(Object bookMark: objectBookMarks){
+                  bookMark = (BookMark) bookMark;
+                  objectBookMarks.add(bookMark);
+              }
+              objectInputStream.close();
+              inputStream.close();
+         }
+         catch(IOException error1) {
+              error1.printStackTrace();
+              return;
+         }
+         catch(ClassNotFoundException error2) {
+              System.out.println("Employee class not found");
+              error2.printStackTrace();
+              return;
         }
     }
-
 
     public void sortBookMarks(){
       Collections.sort(bookMarks, new Comparator<BookMark>() {
