@@ -1,7 +1,7 @@
 //
 //    Authors:
 //    Helena Rosenzweig & Alexandra Hotti
-//
+//    DD2385: Lab assignment 7
 //
 
 import java.io.*;
@@ -39,37 +39,53 @@ JPanel buttonPanel;
 
 JButton visitBookMark;
 JButton saveBookMark;
-JButton handleBookMarks;
+JButton removeBookMarks;
 JOptionPane nameDialogueBox;
 JOptionPane dialogueBoxBookMarks;
 BookMarkLibrary  bookMarkLibrary;
 ArrayList<String> visitedLinks;
 
 WebView(){
+
+      /*  WINDOW GRAPHICS  */
       table = new JTable(50,2);
       rightLinks = new JScrollPane(table);
       frame =new JFrame();
       header = new String[2];
       header[0] = "ADRESS";
       header[1] ="BENÄMNING";
+
+      /*  INITIATE MODELS  */
+      bookMarkLibrary = new BookMarkLibrary();
       webModel = new WebModel();
       webReader=new WebReader();
-      bookMarkLibrary = new BookMarkLibrary();
+      visitedLinks = new ArrayList();
+      leftLinks = new JScrollPane(webReader);
+      textField = new JTextField(20);
 
+      /*  BUTTON GRAPHICS  */
+      buttonPanel = new JPanel();
+      forward = new JButton();
+      backward = new JButton();
+      forward.setText("FORWARD");
+      backward.setText("BACKWARD");
+
+      /*  BOOKMARK GRAPHICS  */
       visitBookMark = new JButton();
       saveBookMark = new JButton();
-      handleBookMarks = new JButton();
-
+      removeBookMarks = new JButton();
       visitBookMark.setText("GO TO");
       saveBookMark.setText("SAVE");
-      handleBookMarks.setText("REMOVE");
+      removeBookMarks.setText("REMOVE");
 
+      /*  FRAME ACTIONLISTENER: close on exit  */
       frame.addWindowListener(new WindowAdapter() {
         public void windowClosing(WindowEvent we) {
           System.exit(0);
         }
       });
 
+      /*  SAVE-BOOKMARK ACTIONLISTENER: saves bookmark  */
       saveBookMark.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           if(visitedLinks.isEmpty()){
@@ -81,6 +97,7 @@ WebView(){
         }
       });
 
+      /*  VISIT-BOOKMARK ACTIONLISTENER: visits a saved bookmark  */
       visitBookMark.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             try{
@@ -98,7 +115,8 @@ WebView(){
         }
       });
 
-      handleBookMarks.addActionListener(new ActionListener() {
+      /*  REMOVE-BOOKMARK ACTIONLISTENER: removes bookmark  */
+      removeBookMarks.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           if(bookMarkLibrary.bookMarks.size()>0){
               bookMarkLibrary.removeBookMark(removeName());
@@ -109,6 +127,7 @@ WebView(){
         }
       } );
 
+      /*  WEBREADER ACTIONLISTENER: makes links clickable  */
       webReader.addHyperlinkListener(new HyperlinkListener() {
           public void hyperlinkUpdate(HyperlinkEvent e) {
               if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
@@ -118,39 +137,31 @@ WebView(){
                 textField.setText(e.getURL().toString());
         }
     }
-});
+    });
 
-      buttonPanel = new JPanel();
-      forward = new JButton();
-      backward = new JButton();
-      forward.setText("FORWARD");
-      backward.setText("BACKWARD");
-      visitedLinks = new ArrayList();
-
+      /*  FORWARD ACTIONLISTENER: moves to "foward" url  */
       forward.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           selectionButtonPressed(forward,e.getActionCommand());
         }
       } );
 
+      /*  FORWARD ACTIONLISTENER: moves to "backward" url  */
       backward.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          selectionButtonPressed(backward,e.getActionCommand());
+          selectionButtonPressed(backkena ska lagras sorterade eller sorteras på användarens begäran. ward,e.getActionCommand());
         }
       } );
 
-      leftLinks = new JScrollPane(webReader);
-      textField = new JTextField(20);
-
+      /* textField ACTIONLISTENER, will evoke actionPerformed method  */
       textField.addActionListener(this);
 
-      System.out.println("den kommer ändå hit");
+      /* A whole lot of adding graphical elements :) */
       buttonPanel.add(backward,BorderLayout.WEST);
       buttonPanel.add(forward,BorderLayout.EAST);
       buttonPanel.add(saveBookMark, BorderLayout.EAST);
-      buttonPanel.add(handleBookMarks, BorderLayout.EAST);
+      buttonPanel.add(removeBookMarks, BorderLayout.EAST);
       buttonPanel.add(visitBookMark, BorderLayout.EAST);
-
       leftLinks.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
       frame.setMinimumSize(new Dimension(700, 500));
       frame.add(textField,BorderLayout.NORTH);
@@ -158,14 +169,22 @@ WebView(){
       frame.add(rightLinks,BorderLayout.EAST);
       frame.add(buttonPanel, BorderLayout.SOUTH);
 
+      /*  YEY! Make it visible!  */
       frame.setVisible(true);
 
-    }
+}
 
+/*      ******      ~~~~ END OF CONSTRUCTOR  ~~~~     ******       */
+
+
+//  Takes in userinput for naming bookMark, input is collected
+//  using a dialogueBox:
 public String enterName(){
     return nameDialogueBox.showInputDialog(frame, "Name your book mark:");
 }
 
+// Takes in userinput for what bookMark to delete, this interaction
+//  occurs via a dialogueBox:
 public String removeName(){
     String [] bookMarkNames = new String[bookMarkLibrary.bookMarks.size()];
     bookMarkLibrary.sortBookMarks();
@@ -183,6 +202,8 @@ public String removeName(){
         return s;
 }
 
+//  Allows the user to visit a webpage that has previously
+//  been saved as a bookMarks. Choice is made via a dialogueBox:
 public String visitSavedBookMark(){
     String [] bookMarkNames = new String[bookMarkLibrary.bookMarks.size()];
     bookMarkLibrary.sortBookMarks();
@@ -200,7 +221,7 @@ public String visitSavedBookMark(){
         return s;
 }
 
-
+// Updates webpage:
 public void updatepage(String url){
   try{
       // calls method loadWebPage and loads table with URL links and tags
@@ -214,6 +235,8 @@ public void updatepage(String url){
   }
 }
 
+// Handles backward and forward traversal between previously
+// visited web pages:
 public void selectionButtonPressed(JButton button, String command){
     System.out.println(currentIndex);
     int numberOfIndexes = visitedLinks.size()-1;
@@ -239,7 +262,6 @@ public void selectionButtonPressed(JButton button, String command){
                   System.out.print("url: ");
                   System.out.println(url);
                   updatepage(url);
-                  //currentIndex = currentIndex --;
               }
               else{
               dialogueBox.showMessageDialog(frame, "can't go "+command);
@@ -248,7 +270,7 @@ public void selectionButtonPressed(JButton button, String command){
           }
         }
 
-// Listens after user to press "ENTER"
+// Listens after user to press "ENTER":
 public void actionPerformed(ActionEvent evt) {
       String url = textField.getText();
       if (url != null){
@@ -260,6 +282,7 @@ public void actionPerformed(ActionEvent evt) {
      }
 }
 
+// Initiates window and program:
 public static void main(String args[]){
       System.out.println("i main");
       WebView webView = new WebView();

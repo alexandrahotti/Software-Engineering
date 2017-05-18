@@ -1,6 +1,12 @@
+//
+//    Authors:
+//    Helena Rosenzweig & Alexandra Hotti
+//    DD2385: Lab assignment 7
+//
 
 import java.io.Serializable;
 
+// Book mark object
 public class BookMark implements Serializable, Comparable<BookMark>{
 
     String name;
