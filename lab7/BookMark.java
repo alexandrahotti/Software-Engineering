@@ -1,7 +1,7 @@
 
 import java.io.Serializable;
 
-public class BookMark  implements Serializable {
+public class BookMark implements Serializable, Comparable<BookMark>{
 
     String name;
     String url;
@@ -16,6 +16,9 @@ public class BookMark  implements Serializable {
     }
     public String getUrl(){
         return this.url;
+    }
+    public int compareTo(BookMark other){
+       return name.compareTo(other.name);
     }
 
 }

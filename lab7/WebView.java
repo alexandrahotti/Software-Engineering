@@ -36,12 +36,16 @@ JButton forward;
 JButton backward;
 int currentIndex;
 JPanel buttonPanel;
+
+JButton saveBookMark;
+JButton handleBookMarks;
+JOptionPane nameDialogueBox;
+JOptionPane dialogueBoxBookMarks;
 BookMarkLibrary  bookMarkLibrary;
 ArrayList<String> visitedLinks;
 
 WebView(){
 
-      bookMarkLibrary = new BookMarkLibrary();
       table = new JTable(50,2);
       rightLinks = new JScrollPane(table);
       frame =new JFrame();
@@ -50,8 +54,25 @@ WebView(){
       header[1] ="BENÄMNING";
       webModel = new WebModel();
       webReader=new WebReader();
+      bookMarkLibrary = new BookMarkLibrary();
 
-      buttonPanel = new JPanel();
+      saveBookMark = new JButton();
+      handleBookMarks = new JButton();
+
+      saveBookMark.setText("SAVE BOOKMARK");
+      handleBookMarks.setText("HANDLE BOOKMARKS");
+
+      saveBookMark.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          bookMarkLibrary.addBookMark(enterName(), textField.getText());
+        }
+      } );
+
+      handleBookMarks.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          bookMarkLibrary.removeBookMark(removeName());
+        }
+      } );
 
       webReader.addHyperlinkListener(new HyperlinkListener() {
           public void hyperlinkUpdate(HyperlinkEvent e) {
@@ -64,6 +85,7 @@ WebView(){
     }
 });
 
+      buttonPanel = new JPanel();
       forward = new JButton();
       backward = new JButton();
       forward.setText("FORWARD");
@@ -87,8 +109,11 @@ WebView(){
 
       textField.addActionListener(this);
 
+      System.out.println("den kommer ändå hit");
       buttonPanel.add(backward,BorderLayout.WEST);
       buttonPanel.add(forward,BorderLayout.EAST);
+      buttonPanel.add(saveBookMark, BorderLayout.EAST);
+      buttonPanel.add(handleBookMarks, BorderLayout.EAST);
 
       leftLinks.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
       frame.setMinimumSize(new Dimension(700, 500));
@@ -99,6 +124,14 @@ WebView(){
 
       frame.setVisible(true);
     }
+
+public String enterName(){
+    return nameDialogueBox.showInputDialog(frame, "Name your book mark:");
+}
+
+public String removeName(){
+    return dialogueBoxBookMarks.showInputDialog(frame, "Enter the name of the book mark you want to delete:");
+}
 
 public void updatepage(String url){
   try{
@@ -158,6 +191,7 @@ public void actionPerformed(ActionEvent evt) {
 }
 
 public static void main(String args[]){
+      System.out.println("i main");
       WebView webView = new WebView();
 }
 

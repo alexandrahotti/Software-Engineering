@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Comparator;
 
 // Start Serializable solution
 
@@ -20,7 +21,12 @@ public class BookMarkLibrary implements Serializable{
 
     BookMarkLibrary(){
         bookMarks = new ArrayList();
-        deserializeBookMark();
+    //    try{
+    //    deserializeBookMark();
+    //    }
+    //    catch{
+
+    //    }
     }
 
     public void addBookMark(String name, String url){
@@ -35,12 +41,11 @@ public class BookMarkLibrary implements Serializable{
         for(int i = 0; i < bookMarks.size(); i++){
             if(bookMarks.get(i).equals(name)){
                 bookMarks.remove(i);
+                serializeBookMark();
                 return "Removed book mark.";
             }
-            else{
-                return "Book mark does not exist.";
-            }
         }
+        return "Book mark does not exist.";
     }
 
     public void serializeBookMark(){
@@ -62,35 +67,32 @@ public class BookMarkLibrary implements Serializable{
       }
     }
 
-    public void deserializeBookMark(){
-        try {
-            //  List<BookMark> objectBookMarks = null;
-              FileInputStream inputStream = new FileInputStream("/tmp/bookMarks.ser");
-              ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-              objectBookMarks = objectInputStream.readObject();
-              for(Object bookMark: objectBookMarks){
-                  bookMark = (BookMark) bookMark;
-                  objectBookMarks.add(bookMark);
-              }
-              objectInputStream.close();
-              inputStream.close();
-         }
-         catch(IOException error1) {
-              error1.printStackTrace();
-              return;
-         }
-         catch(ClassNotFoundException error2) {
-              System.out.println("Employee class not found");
-              error2.printStackTrace();
-              return;
-        }
-    }
+    // public void deserializeBookMark() throws *** EXCEPTION***{
+    //     try {
+    //           List<Object> objectBookMarks = null;
+    //           FileInputStream inputStream = new FileInputStream("/tmp/bookMarks.ser");
+    //           ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+    //           objectBookMarks = objectInputStream.readObject();
+    //
+    //       //    (List<BookMark>)(Object)objectBookMarks;
+    //   //        for(BookMark bookMark: objectBookMarks){
+    //     //          bookMarks.add(bookMark);
+    //       //    }
+    //           objectInputStream.close();
+    //           inputStream.close();
+    //      }
+    //      catch(IOException error1) {
+    //           error1.printStackTrace();
+    //           return;
+    //      }
+    //      catch(ClassNotFoundException error2) {
+    //           System.out.println("Employee class not found");
+    //           error2.printStackTrace();
+    //           return;
+    //     }
+    // }
 
     public void sortBookMarks(){
-      Collections.sort(bookMarks, new Comparator<BookMark>() {
-      public int compare(BookMark bookMark1, BookMark bookMark2){
-          return  bookMark1.name.compareTo(bookMark2.name);
-      }
-  });
+      Collections.sort(bookMarks);
     }
 }
