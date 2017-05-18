@@ -45,7 +45,7 @@ BookMarkLibrary  bookMarkLibrary;
 ArrayList<String> visitedLinks;
 
 WebView(){
-
+//"http://www.nada.kth.se/~henrik"
       table = new JTable(50,2);
       rightLinks = new JScrollPane(table);
       frame =new JFrame();
@@ -70,7 +70,12 @@ WebView(){
 
       handleBookMarks.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
+          if(bookMarkLibrary.bookMarks.size()>0){
           bookMarkLibrary.removeBookMark(removeName());
+        }
+
+
+
         }
       } );
 
@@ -130,7 +135,19 @@ public String enterName(){
 }
 
 public String removeName(){
-    return dialogueBoxBookMarks.showInputDialog(frame, "Enter the name of the book mark you want to delete:");
+    String [] bookMarkNames = new String[bookMarkLibrary.bookMarks.size()];
+    for(int i = 0; i<bookMarkLibrary.bookMarks.size(); i++){
+        bookMarkNames[i] = bookMarkLibrary.bookMarks.get(i).name;
+    }
+        String s = (String) dialogueBoxBookMarks.showInputDialog(
+                                                 frame,
+                                                 "Which book mark do you want to delete?",
+                                                 "Display book marks",
+                                                 dialogueBoxBookMarks.QUESTION_MESSAGE,
+                                                 null,
+                                                 bookMarkNames,
+                                                 bookMarkNames[0]);
+        return s;
 }
 
 public void updatepage(String url){

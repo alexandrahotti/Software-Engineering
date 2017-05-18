@@ -37,10 +37,16 @@ public class BookMarkLibrary implements Serializable{
         // Write objects to file
     }
 
-    public String removeBookMark(String name){
+    public String removeBookMark(String namer){
         for(int i = 0; i < bookMarks.size(); i++){
-            if(bookMarks.get(i).equals(name)){
-                bookMarks.remove(i);
+            // System.out.println("bookremove innan");
+            // System.out.println(bookMarks.get(i)+".get(i)");
+            // System.out.println(name+"name");
+
+            if(bookMarks.get(i).name.equals(namer)){
+
+                System.out.println("bookremove efter");
+                System.out.println(bookMarks.remove(i));
                 serializeBookMark();
                 return "Removed book mark.";
             }
