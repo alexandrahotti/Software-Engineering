@@ -21,12 +21,12 @@ public class BookMarkLibrary implements Serializable{
 
     BookMarkLibrary(){
         bookMarks = new ArrayList();
-    //    try{
-    //    deserializeBookMark();
-    //    }
-    //    catch{
-
-    //    }
+        try{
+            deserializeBookMark();
+        }
+        catch(IOException e){
+            return;
+        }
     }
 
     public void addBookMark(String name, String url){
@@ -56,8 +56,8 @@ public class BookMarkLibrary implements Serializable{
 
     public void serializeBookMark(){
         try {
-             new FileOutputStream("/tmp/bookMarks.ser").close();
-             FileOutputStream outputStream = new FileOutputStream("/tmp/bookMarks.ser");
+             new FileOutputStream("/afs/kth.se/home/h/e/helros/school/prutten_labs/lab7/bookMarks.ser").close();
+             FileOutputStream outputStream = new FileOutputStream("/afs/kth.se/home/h/e/helros/school/prutten_labs/lab7/bookMarks.ser");
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
              objectOutputStream.writeObject(bookMarks);
 
@@ -73,30 +73,27 @@ public class BookMarkLibrary implements Serializable{
       }
     }
 
-    // public void deserializeBookMark() throws *** EXCEPTION***{
-    //     try {
-    //           List<Object> objectBookMarks = null;
-    //           FileInputStream inputStream = new FileInputStream("/tmp/bookMarks.ser");
-    //           ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-    //           objectBookMarks = objectInputStream.readObject();
-    //
-    //       //    (List<BookMark>)(Object)objectBookMarks;
-    //   //        for(BookMark bookMark: objectBookMarks){
-    //     //          bookMarks.add(bookMark);
-    //       //    }
-    //           objectInputStream.close();
-    //           inputStream.close();
-    //      }
-    //      catch(IOException error1) {
-    //           error1.printStackTrace();
-    //           return;
-    //      }
-    //      catch(ClassNotFoundException error2) {
-    //           System.out.println("Employee class not found");
-    //           error2.printStackTrace();
-    //           return;
-    //     }
-    // }
+    public void deserializeBookMark() throws IOException{
+        try {
+              FileInputStream inputStream = new FileInputStream("/afs/kth.se/home/h/e/helros/school/prutten_labs/lab7/bookMarks.ser");
+              ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+              List<BookMark> objectBookMarks = (List<BookMark>)objectInputStream.readObject();
+              for(BookMark bookMark: objectBookMarks){
+                  bookMarks.add(bookMark);
+              }
+              objectInputStream.close();
+              inputStream.close();
+         }
+         catch(IOException error1) {
+              error1.printStackTrace();
+              return;
+         }
+         catch(ClassNotFoundException error2) {
+              System.out.println("Employee class not found");
+              error2.printStackTrace();
+              return;
+        }
+    }
 
     public void sortBookMarks(){
       Collections.sort(bookMarks);
