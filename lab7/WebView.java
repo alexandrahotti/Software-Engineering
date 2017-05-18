@@ -37,6 +37,7 @@ JButton backward;
 int currentIndex;
 JPanel buttonPanel;
 
+JButton visitBookMark;
 JButton saveBookMark;
 JButton handleBookMarks;
 JOptionPane nameDialogueBox;
@@ -56,11 +57,18 @@ WebView(){
       webReader=new WebReader();
       bookMarkLibrary = new BookMarkLibrary();
 
+      visitBookMark = new JButton();
       saveBookMark = new JButton();
       handleBookMarks = new JButton();
 
       saveBookMark.setText("SAVE BOOKMARK");
       handleBookMarks.setText("HANDLE BOOKMARKS");
+
+      frame.addWindowListener(new WindowAdapter() {
+        public void windowClosing(WindowEvent we) {
+          System.exit(0);
+        }
+      });
 
       saveBookMark.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
@@ -68,14 +76,12 @@ WebView(){
         }
       } );
 
+
       handleBookMarks.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           if(bookMarkLibrary.bookMarks.size()>0){
           bookMarkLibrary.removeBookMark(removeName());
         }
-
-
-
         }
       } );
 
@@ -128,6 +134,7 @@ WebView(){
       frame.add(buttonPanel, BorderLayout.SOUTH);
 
       frame.setVisible(true);
+
     }
 
 public String enterName(){
@@ -150,6 +157,9 @@ public String removeName(){
         return s;
 }
 
+
+
+
 public void updatepage(String url){
   try{
       // calls method loadWebPage and loads table with URL links and tags
@@ -171,9 +181,9 @@ public void selectionButtonPressed(JButton button, String command){
     }
     else{
           if(command.equals("FORWARD")){
-              if(currentIndex < numberOfIndexes){
+              if(currentIndex <= numberOfIndexes){
                   currentIndex = currentIndex + 1;
-                  String url = visitedLinks.get(currentIndex);
+                  String url = visitedLinks.get(currentIndex-1);
                   updatepage(url);
 
               }
@@ -182,11 +192,13 @@ public void selectionButtonPressed(JButton button, String command){
               }
           }
           else if(command.equals("BACKWARD")){
-              if (currentIndex>0){
+              if (currentIndex>1){
                   currentIndex = currentIndex-1;
-                  String url = visitedLinks.get(currentIndex);
+                  String url = visitedLinks.get(currentIndex-1);
+                  System.out.print("url: ");
+                  System.out.println(url);
                   updatepage(url);
-                  currentIndex = currentIndex --;
+                  //currentIndex = currentIndex --;
               }
               else{
               dialogueBox.showMessageDialog(frame, "can't go "+command);

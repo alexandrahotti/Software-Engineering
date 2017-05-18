@@ -33,7 +33,6 @@ public class BookMarkLibrary implements Serializable{
         BookMark bookMark = new BookMark(name, url);
         bookMarks.add(bookMark);
         serializeBookMark();
-
         // Write objects to file
     }
 
@@ -60,10 +59,6 @@ public class BookMarkLibrary implements Serializable{
              FileOutputStream outputStream = new FileOutputStream("/afs/kth.se/home/h/e/helros/school/prutten_labs/lab7/bookMarks.ser");
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
              objectOutputStream.writeObject(bookMarks);
-
-            // for(BookMark bookMark: bookMarks){
-            //     objectOutputStream.writeObject(bookMark);
-            // }
 
              objectOutputStream.close();
              outputStream.close();
