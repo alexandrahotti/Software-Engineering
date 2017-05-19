@@ -1,7 +1,7 @@
 //
 //    Authors:
 //    Helena Rosenzweig & Alexandra Hotti
-//    DD2385: Lab assignment 7
+//
 //
 
 import java.io.*;
@@ -70,7 +70,6 @@ public String [][] loadWebPage(String webPage) throws IOException{
 	 }
    catch(BadLocationException | IOException e){
        System.out.println("Failed to load web page.");
-       System.out.println(e);
        return null;
    }
 

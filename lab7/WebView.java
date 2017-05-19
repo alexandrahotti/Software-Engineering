@@ -69,6 +69,10 @@ WebView(){
       backward = new JButton();
       forward.setText("FORWARD");
       backward.setText("BACKWARD");
+      forward.setBackground(Color.RED);
+      backward.setBackground(Color.RED);
+      forward.setOpaque(true);
+      backward.setOpaque(true);
 
       /*  BOOKMARK GRAPHICS  */
       visitBookMark = new JButton();
@@ -149,7 +153,7 @@ WebView(){
       /*  FORWARD ACTIONLISTENER: moves to "backward" url  */
       backward.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          selectionButtonPressed(backkena ska lagras sorterade eller sorteras på användarens begäran. ward,e.getActionCommand());
+          selectionButtonPressed(backward,e.getActionCommand());
         }
       } );
 
@@ -223,6 +227,7 @@ public String visitSavedBookMark(){
 
 // Updates webpage:
 public void updatepage(String url){
+
   try{
       // calls method loadWebPage and loads table with URL links and tags
       table.setModel(new DefaultTableModel(webModel.loadWebPage(url), header));
@@ -232,6 +237,24 @@ public void updatepage(String url){
   catch(IOException e){
       // displays dialogueBox in case invalid url was entered
       dialogueBox.showMessageDialog(frame, "Invalid URL adress");
+  }
+  if(visitedLinks.size()>0 && currentIndex>1){
+    backward.setBackground(Color.BLUE);
+    backward.setOpaque(true);
+  }
+  else{
+      backward.setBackground(Color.RED);
+      backward.setOpaque(true);
+  }
+  if(visitedLinks.size()>0 && currentIndex<visitedLinks.size()){
+    System.out.println(currentIndex+" currentIndex");
+    System.out.println(visitedLinks.size()+" vis links size");
+    forward.setBackground(Color.BLUE);
+    forward.setOpaque(true);
+  }
+  else{
+      forward.setBackground(Color.RED);
+      forward.setOpaque(true);
   }
 }
 
@@ -277,8 +300,6 @@ public void actionPerformed(ActionEvent evt) {
         updatepage(url);
         visitedLinks.add(url);
         currentIndex ++;
-     }
-     else{
      }
 }
 

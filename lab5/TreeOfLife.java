@@ -17,6 +17,7 @@ String line;
 String level;
 String name;
 String text;
+String rootlevel;
 
 TreeOfLife(){
         super();
@@ -30,6 +31,8 @@ void initTree() {
   level = listNodes[0];
   text = listNodes[1];
   name = listNodes[2];
+  rootlevel = level;
+  //System.out.println("level är: "+level);
 
   root = new MyNode(name,level,text);
   treeModel = new DefaultTreeModel(root);
@@ -59,14 +62,21 @@ private void buildTree() {
     text = listNodes2[1];
     name = listNodes2[2];
 
-   while(sc.hasNextLine()&& !"Biosfär".equals(level)){
+   while(sc.hasNextLine()&& !rootlevel.equals(level)){
       buildTree(name, root, level, text);
       String[] listNodes = readInputFile();
       level = listNodes[0];
       text = listNodes[1];
       name= listNodes[2];
+    }
+//  System.out.println("level är: "+level);
+
+  if(!level.equals(rootlevel)){
+      System.out.println("Woops! File was broken...");
+      System.exit(0);
+  }
 }
-}
+
 
 private void buildTree( String name, MyNode parent, String level, String text) {
 
