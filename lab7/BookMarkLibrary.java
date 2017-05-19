@@ -1,3 +1,11 @@
+
+//
+//    Authors:
+//    Helena Rosenzweig & Alexandra Hotti
+//    DD2385: Lab assignment 7
+//
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
